@@ -2,22 +2,24 @@
 using namespace std;
 
 #define ll long long int
+#define ld long double
+#define devangsvaghani ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define pb push_back
-#define em emplace_back
-#define fi(l, r) for(ll i=l; i<r; i++)
-#define fir(r, l) for(ll i=r; i>=l; i--)
-template<typename T> void input(vector<T>& t) { for (auto& v : t) cin >> v; }
+#define eb emplace_back
+#define yes cout << "YES" << endl;
+#define no cout << "NO" << endl;
 
 void solve(){
-
-}
+    
+}   
 
 int main(){
-    ll t;
+    devangsvaghani;
+    ll t = 1;
     cin >> t;
-    // t = 1;
     while(t--){
         solve();
     }
     return 0;
 }
+
