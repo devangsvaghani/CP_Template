@@ -2,35 +2,23 @@
 
 
 struct segNode{
-  ll mxsum, sum, pre, suf;
+  ll sum;
   segNode(){ // Indetity Element
-    mxsum = 0;
     sum = 0;
-    pre = 0;
-    suf = 0;
   }
 
-  segNode(ll a, ll b, ll c, ll d){
-    mxsum = max(0ll, a);
-    sum = b;
-    pre = c;
-    suf = d;
+  segNode(ll ai){
+    sum = ai;
   }
 
   // merge logic
   void merge(segNode& a, segNode& b){ 
-    mxsum = max(a.mxsum, max(b.mxsum, a.suf + b.pre));
     sum = a.sum + b.sum;
-    pre = max(a.pre, a.sum + b.pre);
-    suf = max(b.suf, b.sum + a.suf);
   }
 
   // update node
   void update(ll val){
-    mxsum = max(0ll, val);
     sum = val;
-    pre = val;
-    suf = val;
   }
 };
 
@@ -43,12 +31,12 @@ class segTree{
     ll s = 1;
     while(s < 2 * n) s <<= 1;
     tree.resize(s);
-    fill(all(tree), segNode());
+    fill(tree.begin(), tree.end(), segNode());
   }
 
   void build(ll index, ll start, ll end, vector<ll> &arr){
     if(start == end){
-      tree[index] = segNode(arr[start], arr[start], arr[start], arr[start]);
+      tree[index] = segNode(arr[start]);
       return;
     }
 
