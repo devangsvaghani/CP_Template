@@ -1,6 +1,4 @@
 
-
-
 struct segNode{
   ll sum;
   segNode(){ // Indetity Element
