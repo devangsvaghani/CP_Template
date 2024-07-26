@@ -23,8 +23,8 @@ typedef long double lld;
 
 #define yes cout << "YES\n";
 #define no cout << "NO\n";
-#define first F
-#define second S
+#define F first
+#define S second
 #define f(i, x, n)       for (ll i = x; i < n; i++)
 #define rf(i, x, n)      for (ll i = x; i >= n; i--)
 

@@ -1,87 +1,83 @@
-
 struct segNode{
   ll sum;
-  segNode(){ // Indetity Element
+ 
+  segNode(){
     sum = 0;
   }
-
-  segNode(ll ai){
-    sum = ai;
+ 
+  void merge(segNode &x, segNode& y){
+    sum = x.sum | y.sum;
   }
-
-  // merge logic
-  void merge(segNode& a, segNode& b){ 
-    sum = a.sum + b.sum;
-  }
-
-  // update node
+ 
   void update(ll val){
     sum = val;
-  }
+  } 
 };
-
-
+ 
 class segTree{
-
+  ll n;
   vector<segNode> tree;
+ 
   public:
-  segTree(ll n){
-    ll s = 1;
-    while(s < 2 * n) s <<= 1;
-    tree.resize(s);
-    fill(tree.begin(), tree.end(), segNode());
+  segTree(vector<ll> &v, ll n){
+    this -> n = n;
+    tree.resize(4 * n);
+    fill(all(tree), segNode());
+ 
+    build(0, 0, n-1, v);
   }
-
-  void build(ll index, ll start, ll end, vector<ll> &arr){
-    if(start == end){
-      tree[index] = segNode(arr[start]);
+ 
+  void build(ll node, ll l, ll r, vector<ll> &v){
+    if(l == r){
+      tree[node].update(v[l]);
       return;
     }
-
-    ll mid = start + (end - start) / 2;
-    build(2 * index + 1, start, mid, arr);
-    build(2 * index + 2, mid + 1, end, arr);
-
-    tree[index].merge(tree[2 * index + 1], tree[2 * index + 2]);
+ 
+    ll mid = l + (r - l)/2;
+    build(2 * node + 1, l, mid, v);
+    build(2 * node + 2, mid + 1, r, v);
+ 
+    tree[node].merge(tree[2 * node + 1], tree[2 * node + 2]);
   }
-
-  void build(vector<ll>& arr, ll n){
-    build(0, 0, n-1, arr);
-  }
-
-  segNode query(ll index, ll start, ll end, ll left, ll right){
-    if(start > right || end < left) return segNode();
-    if(start >= left && end <= right) return tree[index];
-
-    ll mid = start + (end - start) / 2;
-    segNode l = query(2 * index + 1, start, mid, left, right);
-    segNode r = query(2 * index + 2, mid + 1, end, left, right);
-    segNode ans;
-    ans.merge(l, r);
-    return ans;
-  }
-
-  segNode query(ll left, ll right, ll n){
-    return query(0, 0, n-1, left, right);
-  }
-
-  void update(ll index, ll start, ll end, ll pos, ll val){
-    if(start == end){
-      tree[index].update(val);
-      return;
-    }
-
-    ll mid = start + (end - start) / 2;
-    if(pos <= mid){
-      update(2 * index + 1, start, mid, pos, val);
-    }else{
-      update(2 * index + 2, mid + 1, end, pos, val);
-    }
-
-    tree[index].merge(tree[2 * index + 1], tree[2 * index + 2]);
-  }
-
-  void update(ll pos, ll val, ll n){ // change according to update requirnment
+ 
+  void update(ll pos, ll val){
     update(0, 0, n-1, pos, val);
+  }
+ 
+  void update(ll node, ll l, ll r, ll pos, ll val){
+    if(l == r){
+      tree[node].update(val);
+      return;
+    }
+ 
+    ll mid = l + (r - l)/2;
+    if(pos <= mid){
+      update(2 * node + 1, l, mid, pos, val);
+    }else{
+      update(2 * node + 2, mid + 1, r, pos, val);
+    }
+ 
+    tree[node].merge(tree[2 * node + 1], tree[2 * node + 2]);
+  }
+ 
+  ll query(ll s, ll e){
+    segNode ans = query(0, 0, n-1, s, e);
+    
+    return ans.sum;
+  }
+ 
+  segNode query(ll node, ll l, ll r, ll s, ll e){
+    if(l >= s && r <= e) return tree[node];
+ 
+    if(l > e || r < s) return segNode();
+ 
+    ll mid = l + (r - l)/2;
+ 
+    segNode ans, left, right;
+    left = query(2 * node + 1, l, mid, s, e);
+    right = query(2 * node + 2, mid + 1, r, s, e);
+    ans.merge(left, right);
+    
+    return ans;
   }
 };
