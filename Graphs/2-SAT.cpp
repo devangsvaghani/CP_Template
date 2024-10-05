@@ -64,6 +64,8 @@ struct TwoSatSolver {
 
     // how to use
 
+    // Nodes are from 0 to n - 1 ( 0 indexded )
+
     // static void example_usage() {
     //     TwoSatSolver solver(3); // a, b, c
     //     solver.add_disjunction(0, false, 1, true);  //     a  v  not b
