@@ -43,6 +43,7 @@ class SparseTable{
         }
     }
 
+    // 0 - based indexing use for call function
     ll query(ll l, ll r){
         // sum query
         // ll sum = 0;
