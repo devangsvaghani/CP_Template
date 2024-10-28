@@ -1,6 +1,7 @@
-ll single_phi(ll n){
-  ll result = n;
-  for(ll i = 2; i * i <= n; ++i){
+// Eular totient function O(sqrt(n))
+long long singlePhi(long long n){
+  long long result = n;
+  for(long long i = 2; i * i <= n; ++i){
     if(n % i == 0){
       while(n % i == 0) n /= i;
       result -= result / i;
@@ -13,13 +14,16 @@ ll single_phi(ll n){
   return result;
 }
 
-ll phi[N];
-void f_phi(){
-  for(ll i = 0; i < N; ++i) phi[i] = i;
+// Eular totient function - Precomputation
+const long long phiSize = 1e6 + 1;
+long long phi[phiSize];
 
-  for(ll i = 2; i < N; ++i){
+void preComputePhi(){
+  for(long long i = 0; i < phiSize; ++i) phi[i] = i;
+
+  for(long long i = 2; i < phiSize; ++i){
     if(phi[i] == i){
-      for(ll j = i; j < N; j += i){
+      for(long long j = i; j < phiSize; j += i){
         phi[j] -= phi[j] / i;
       }
     }

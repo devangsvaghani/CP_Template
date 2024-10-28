@@ -1,11 +1,11 @@
 
 // Single hash
-class Hash{
+class HashString{
     long long p = 31, m = 1e9+9;
     vector<long long> h, ppow;
     public:
  
-    Hash(string &s){
+    HashString(string &s){
         int n = s.length();
         h.resize(n + 1, 0);
         ppow.resize(n + 1, 0);
@@ -15,9 +15,10 @@ class Hash{
             ppow[i] = (ppow[i - 1] * p) % m;
             h[i] = ((h[i - 1] * p) % m + (s[i - 1] - 'a' + 1)) % m;
         }
-    }
- 
-    long long getSubHash(int l, int r){ // assume zero based indexing
+    }   
+    
+    // assume zero based indexing
+    long long getSubHash(int l, int r){ 
         long long ans = (h[r + 1] - (h[l] * ppow[r - l + 1]) % m + m) % m;
         return ans;
     }
@@ -43,7 +44,7 @@ class HashString{
     vector<long long> h1, ppow1;
     public:
  
-    Hash(string &s){
+    HashString(string &s){
         int n = s.length();
         h.resize(n + 1, 0);
         h1.resize(n + 1, 0);
@@ -59,8 +60,9 @@ class HashString{
             h1[i] = ((h1[i - 1] * p1) % m1 + (s[i - 1] - 'a' + 1)) % m1;
         }
     }
- 
-    pair<long long, long long> getSubHash(int l, int r){ // assume zero based indexing
+    
+    // assume zero based indexing
+    pair<long long, long long> getSubHash(int l, int r){ 
         long long ans = (h[r + 1] - (h[l] * ppow[r - l + 1]) % m + m) % m;
         long long ans1 = (h1[r + 1] - (h1[l] * ppow1[r - l + 1]) % m1 + m1) % m1;
         return {ans, ans1};
