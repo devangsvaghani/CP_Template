@@ -8,7 +8,7 @@ void preComputeFact(){
     for(long long i = 1; i < factSize; ++i){
         fact[i] = (fact[i - 1] * i) % mod;
     }
-    invFact[factSize - 1] = binPowerMod(fact[factSize - 1], mod - 2, mod);
+    invFact[factSize - 1] = binPower(fact[factSize - 1], mod - 2, mod);
     for(long long i = factSize - 2; i >= 0; --i){
         invFact[i] = (invFact[i + 1] * (i + 1)) % mod;
     }
