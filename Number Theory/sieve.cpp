@@ -38,3 +38,19 @@ void sieve(){
         }
     }
 }
+
+
+// Smallest Prime Factor Sieve
+const long long spfSize = 1e7+1;
+long long spf[spfSize];
+
+void preComputeSPF(){
+    for(long long i = 0; i < spfSize; ++i) spf[i] = i;
+    for(long long i = 2; i < spfSize; ++i){
+        if(spf[i] == i){
+            for(long long j = i * i; j < spfSize; j += i){
+                if(spf[j] == j) spf[j] = i;
+            }
+        }
+    }
+}
