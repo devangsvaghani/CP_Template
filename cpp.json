@@ -723,10 +723,12 @@
         "description": "Hash String"
     },
     "KMP Algo Prefix Function": {
-        "prefix": "KMP Prefix",
+        "prefix": "KMP Algo Prefix Function",
         "body": [
             "// Knuth-Morris-Pratt algorithm",
-            "vector<long long> prefixFunction(string &s, long long n){",
+            "vector<long long> prefixFunction(string &s){",
+            "    // pref till that index (ex. abcabc = 000123)",
+            "    long long n = s.length();",
             "    vector<long long> pi(n);",
             "    pi[0] = 0;",
             "    for(long long i = 1; i < n; ++i){",

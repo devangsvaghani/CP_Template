@@ -15,8 +15,10 @@ vector<long long> prefixFunction(vector<long long> &v, long long n){
     return pi;
 }
 
-// Knuth–Morris–Pratt algorithm
-vector<long long> prefixFunction(string &s, long long n){
+// Knuth-Morris-Pratt algorithm
+vector<long long> prefixFunction(string &s){
+    // pref till that index (ex. abcabc = 000123)
+    long long n = s.length();
     vector<long long> pi(n);
     pi[0] = 0;
     for(long long i = 1; i < n; ++i){
