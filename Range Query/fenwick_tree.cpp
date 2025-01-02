@@ -6,13 +6,13 @@ struct FenwickTree {
 
     // v[pos] += dif
     void update(int pos, long long dif) { 
-        for (; pos < n; pos |= pos + 1) s[pos] += dif;
+        for (; pos < n; pos += (pos & -pos)) s[pos] += dif;
     }
 
-    // sum of values in [0, pos)
+    // sum of values in [1, pos]
     long long query(int pos) { 
         long long res = 0;
-        for (; pos > 0; pos &= pos - 1) res += s[pos-1];
+        for (; pos > 0; pos -= (pos & -pos)) res += s[pos];
         return res;
     }
 };

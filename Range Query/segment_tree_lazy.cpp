@@ -43,7 +43,7 @@ class segTree{
         this -> n = n;
         tree.resize(4 * n, segNode());
     
-        build(0, 0, n-1);
+        build(1, 0, n-1);
     }
     
     void build(long long node, long long l, long long r){
@@ -53,25 +53,25 @@ class segTree{
         }
     
         long long mid = l + (r - l)/2;
-        build(2 * node + 1, l, mid);
-        build(2 * node + 2, mid + 1, r);
+        build(node << 1, l, mid);
+        build(node << 1 | 1, mid + 1, r);
     
-        tree[node].merge(tree[2 * node + 1], tree[2 * node + 2]);
+        tree[node].merge(tree[node << 1], tree[node << 1 | 1]);
     }
     
     void push(long long node, long long l, long long r){
         tree[node].lazy_apply(l, r);
     
         if(l != r){
-            tree[2 * node + 1].lazy_merge(tree[node]);
-            tree[2 * node + 2].lazy_merge(tree[node]);
+            tree[node << 1].lazy_merge(tree[node]);
+            tree[node << 1 | 1].lazy_merge(tree[node]);
         }
     
         tree[node].lazy_remove();
     }
     
     void update(long long s, long long e, long long x){
-        update(0, 0, n-1, s, e, x);
+        update(1, 0, n-1, s, e, x);
     }
     
     void update(long long node, long long l, long long r, long long s, long long e, long long x){
@@ -85,14 +85,14 @@ class segTree{
         }
     
         long long mid = l + (r - l)/2;
-        update(2 * node + 1, l, mid, s, e, x);
-        update(2 * node + 2, mid + 1, r, s, e, x);
+        update(node << 1, l, mid, s, e, x);
+        update(node << 1 | 1, mid + 1, r, s, e, x);
     
-        tree[node].merge(tree[2 * node + 1], tree[2 * node + 2]);
+        tree[node].merge(tree[node << 1], tree[node << 1 | 1]);
     }
     
     long long query(long long s, long long e){
-        return query(0, 0, n-1, s, e).sum;
+        return query(1, 0, n-1, s, e).sum;
     }
     
     segNode query(long long node, long long l, long long r, long long s, long long e){
@@ -103,8 +103,8 @@ class segTree{
     
         long long mid = l + (r - l)/2;
         segNode ans, left, right;
-        left = query(2 * node + 1, l, mid, s, e);
-        right = query(2 * node + 2, mid + 1, r, s, e);
+        left = query(node << 1, l, mid, s, e);
+        right = query(node << 1 | 1, mid + 1, r, s, e);
     
         ans.merge(left, right);
         return ans;

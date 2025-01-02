@@ -1,16 +1,16 @@
 struct segNode{
-    long long mx;
+    long long sum;
     
     segNode(){
-        mx = LLONG_MIN;
+        sum = 0;
     }
     
     void merge(segNode &x, segNode& y){
-        mx = max(x.mx, y.mx);
+        sum = x.sum + y.sum;
     }
     
     void update(long long val){
-        mx = val;
+        sum = val;
     } 
 };
  
@@ -20,18 +20,18 @@ class segTree{
     
     public:
     segTree(){}
-
+ 
     segTree(long long n){
         this -> n = n;
         tree.resize(4 * n);
     }
-
+ 
     segTree(vector<long long> &v, long long n){
         this -> n = n;
         tree.resize(4 * n);
         fill(all(tree), segNode());
     
-        build(0, 0, n-1, v);
+        build(1, 0, n-1, v);
     }
     
     void build(long long node, long long l, long long r, vector<long long> &v){
@@ -41,14 +41,14 @@ class segTree{
         }
     
         long long mid = l + (r - l)/2;
-        build(2 * node + 1, l, mid, v);
-        build(2 * node + 2, mid + 1, r, v);
+        build(node << 1, l, mid, v);
+        build(node << 1 | 1, mid + 1, r, v);
     
-        tree[node].merge(tree[2 * node + 1], tree[2 * node + 2]);
+        tree[node].merge(tree[node << 1], tree[node << 1 | 1]);
     }
     
     void update(long long pos, long long val){
-        update(0, 0, n-1, pos, val);
+        update(1, 0, n-1, pos, val);
     }
     
     void update(long long node, long long l, long long r, long long pos, long long val){
@@ -59,18 +59,18 @@ class segTree{
     
         long long mid = l + (r - l)/2;
         if(pos <= mid){
-            update(2 * node + 1, l, mid, pos, val);
+            update(node << 1, l, mid, pos, val);
         }else{
-            update(2 * node + 2, mid + 1, r, pos, val);
+            update(node << 1 | 1, mid + 1, r, pos, val);
         }
     
-        tree[node].merge(tree[2 * node + 1], tree[2 * node + 2]);
+        tree[node].merge(tree[node << 1], tree[node << 1 | 1]);
     }
     
     long long query(long long s, long long e){
-        segNode ans = query(0, 0, n-1, s, e);
+        segNode ans = query(1, 0, n-1, s, e);
         
-        return ans.mx;
+        return ans.sum;
     }
     
     segNode query(long long node, long long l, long long r, long long s, long long e){
@@ -81,8 +81,8 @@ class segTree{
         long long mid = l + (r - l)/2;
     
         segNode ans, left, right;
-        left = query(2 * node + 1, l, mid, s, e);
-        right = query(2 * node + 2, mid + 1, r, s, e);
+        left = query(node << 1, l, mid, s, e);
+        right = query(node << 1 | 1, mid + 1, r, s, e);
         ans.merge(left, right);
         
         return ans;
