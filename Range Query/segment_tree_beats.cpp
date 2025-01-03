@@ -128,7 +128,7 @@ void pushdown(int t, int tl, int tr) {
 	push_min(t << 1 | 1, T[t].min1, tm + 1 == tr);
 }
 
-void build(int t = 1, int tl = 0, int tr = N - 1) {
+void build(int t = 1, int tl = 0, int tr = MAXN - 1) {
 	T[t].lazy = 0;
 	if (tl == tr) {
 		T[t].sum = T[t].max1 = T[t].min1 = A[tl];
@@ -144,7 +144,7 @@ void build(int t = 1, int tl = 0, int tr = N - 1) {
 	merge(t);
 }
 
-void update_add(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
+void update_add(int l, int r, ll v, int t = 1, int tl = 0, int tr = MAXN - 1) {
 	if (r < tl || tr < l) { return; }
 	if (l <= tl && tr <= r) {
 		push_add(t, tl, tr, v);
@@ -158,7 +158,7 @@ void update_add(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
 	merge(t);
 }
 
-void update_chmin(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
+void update_chmin(int l, int r, ll v, int t = 1, int tl = 0, int tr = MAXN - 1) {
 	if (r < tl || tr < l || v >= T[t].max1) { return; }
 	if (l <= tl && tr <= r && v > T[t].max2) {
 		push_max(t, v, tl == tr);
@@ -172,7 +172,7 @@ void update_chmin(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
 	merge(t);
 }
 
-void update_chmax(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
+void update_chmax(int l, int r, ll v, int t = 1, int tl = 0, int tr = MAXN - 1) {
 	if (r < tl || tr < l || v <= T[t].min1) { return; }
 	if (l <= tl && tr <= r && v < T[t].min2) {
 		push_min(t, v, tl == tr);
@@ -186,7 +186,7 @@ void update_chmax(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
 	merge(t);
 }
 
-ll query_sum(int l, int r, int t = 1, int tl = 0, int tr = N - 1) {
+ll query_sum(int l, int r, int t = 1, int tl = 0, int tr = MAXN - 1) {
 	if (r < tl || tr < l) { return 0; }
 	if (l <= tl && tr <= r) { return T[t].sum; }
 	pushdown(t, tl, tr);
