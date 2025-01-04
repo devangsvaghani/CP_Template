@@ -33,7 +33,7 @@ public:
  
     long long count_components(){
         long long cnt = 0;
-        for (long long i = 1; i < n; ++i){
+        for (long long i = 0; i < n; ++i){
             if (par[i] == i) ++cnt;
         }
  
