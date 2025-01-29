@@ -3,7 +3,7 @@
 struct BIT {
     long long n;
     vector<long long> bit;
-    FenwickTree(int n) : bit(n), n(n) {}
+    BIT(int n) : bit(n), n(n) {}
 
     // v[pos] += dif
     void update(int pos, long long dif) { 
