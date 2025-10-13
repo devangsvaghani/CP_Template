@@ -15,6 +15,7 @@ Note: 0-based indexing
 */ 
 
 const int MAXN = 200001;
+const ll llINF = 1e18;
 ll A[MAXN];
 
 struct Node {
